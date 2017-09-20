@@ -1,12 +1,23 @@
 <div class="jumbotron">
-    <h1>Home Page</h1>
 
-    <p>{{ message }}</p>
+    <h1>Popular Movies</h1>
+
     <div class="container">
-        <div ng-repeat="movie in movies">
-            <h2>{{movie.title}}</h2>
-            <p>{{movie.overview}}</p>
-            <!--<img src="cinqueterre.jpg" class="img-thumbnail" alt="Cinque Terre" width="304" height="236">-->
+        <div ng-repeat="sublist in movies" class="row top-buffer">
+            <div ng-repeat="movie in sublist" class="col-md-4">
+                <div class="card">
+                    <img class="card-img-top"
+                         src="https://image.tmdb.org/t/p/w185_and_h278_bestv2/{{movie.poster_path}}"
+                         alt="{{movie.title}}">
+                    <div class="card-block">
+                        <h4 class="card-title">{{movie.title}}</h4>
+                        <p class="card-text">{{movie.overview}}</p>
+                        <p class="card-text">
+                            <small class="text-muted">Last updated 3 mins ago</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

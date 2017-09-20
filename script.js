@@ -31,7 +31,7 @@
 
     scotchApp.service('movieService', function($http) {
         this.get = function() {
-          return $http.get('https://api.themoviedb.org/3/discover/movie?api_key=cd011ce4747999c8ae715a61176561e6&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&year=2017')
+          return $http.get('https://api.themoviedb.org/3/movie/popular?api_key=cd011ce4747999c8ae715a61176561e6&language=en-US')
             .then(function(result) {
               return result;
             })
@@ -50,13 +50,18 @@
 	scotchApp.controller('mainController', function($scope, movieService) {
 		// create a message to display in our view
 		movieService.get().then( result => {
-		    $scope.movies = result.data.results;
+		     var movies = [];
+             for (var i=0; i<result.data.results.length; i+=3){
+                movies.push(result.data.results.slice(i,i+3));
+              }
+
+		    $scope.movies = movies;
 		});
 
 		$scope.search = () => {
 		    console.info('search text ' + $scope.searchText)
-		    movieService.search($scope.searchText).then( result => {
-            		    $scope.movies = result.data.results;
+		    return movieService.search($scope.searchText).then( result => {
+            		    return result.data.results;
             		});
 		}
 	});
