@@ -33,10 +33,16 @@
         this.get = function() {
           return $http.get('https://api.themoviedb.org/3/discover/movie?api_key=cd011ce4747999c8ae715a61176561e6&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&year=2017')
             .then(function(result) {
-              // return the enveloped data
-              console.log(result.data.results);
               return result;
             })
+        };
+
+        this.search = function(searchText) {
+           var searchApiPath = 'https://api.themoviedb.org/3/search/movie?api_key=cd011ce4747999c8ae715a61176561e6&language=en-US&query='+searchText+'&page=1&include_adult=false';
+           return $http.get(searchApiPath)
+                    .then(function(result) {
+                      return result;
+                    })
         }
     });
 
@@ -46,6 +52,13 @@
 		movieService.get().then( result => {
 		    $scope.movies = result.data.results;
 		});
+
+		$scope.search = () => {
+		    console.info('search text ' + $scope.searchText)
+		    movieService.search($scope.searchText).then( result => {
+            		    $scope.movies = result.data.results;
+            		});
+		}
 	});
 
 	scotchApp.controller('aboutController', function($scope) {
