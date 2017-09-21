@@ -1,5 +1,5 @@
 	// create the module and name it scotchApp
-	var scotchApp = angular.module('scotchApp', ['ngRoute','ui.bootstrap']);
+	var scotchApp = angular.module('scotchApp', ['ngRoute']);
 
 	// configure our routes
 	scotchApp.config(function($routeProvider) {
@@ -23,10 +23,16 @@
 				controller  : 'contactController'
 			})
 
+			// route for the details page
+            .when('/details', {
+                templateUrl : 'pages/details.html',
+                controller  : 'detailsController'
+            })
+
 			.when('/favorites', {
-            				templateUrl : 'pages/favorites.html',
-            				controller  : 'favoritesController'
-            			});
+                templateUrl : 'pages/favorites.html',
+                controller  : 'favoritesController'
+            });
 	});
 
     scotchApp.service('movieService', function($http) {
@@ -49,7 +55,7 @@
                       self.setMovies(result.data.results);
                       return self.movies;
                     })
-        }
+        };
 
         this.setMovies = function(movies) {
             for (var i=0; i<movies.length; i+=3){
@@ -59,7 +65,12 @@
 
          this.getMovies = function() {
                return this.movies;
-         }
+         };
+
+         this.getDetails = function(id) {
+          var movieDetailsApiPath = 'https://api.themoviedb.org/3/movie/'+ id +'?api_key=cd011ce4747999c8ae715a61176561e6&language=en-US'
+          return $http.get(movieDetailsApiPath)
+         };
     });
 
 	scotchApp.controller('mainController', function($scope, movieService) {
@@ -72,6 +83,10 @@
 		    console.info('search text ' + $scope.searchText)
 		    return movieService.search($scope.searchText).then( result => {
             });
+		};
+
+		$scope.viewDetails = (id) => {
+		       console.log(id);
 		}
 	});
 
@@ -87,4 +102,8 @@
 	scotchApp.controller('favoritesController', function($scope) {
     		$scope.message = 'Favorites';
     });
+
+    scotchApp.controller('detailsController', function($scope, movieService) {
+    		$scope.message = 'Look! I am an details page.' + $scope.id;
+    	});
 
