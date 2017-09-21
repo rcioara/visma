@@ -6,7 +6,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-route.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-animate.min.js"></script>
-<!--   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js"></script> -->
   <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
   <script src="script.js"></script>
   
@@ -52,14 +51,13 @@
               </ul>
               <form class="form-inline my-2 my-lg-0">
                   <input class="form-control mr-sm-2" type="text" ng-model="searchText" placeholder="Search a movie" aria-label="Search">
-                  <button class="btn btn-outline-success my-2 my-sm-0" type="submit" ng-click="search()">Search</button>
+                  <button class="btn btn-outline-success my-2 my-sm-0" type="submit" ng-click="search(searchText)">Search</button>
               </form>
           </div>
     </nav>
+
     <div id="main">
-
         <div ng-view></div>
-
     </div>
 
     <footer class="text-center">
