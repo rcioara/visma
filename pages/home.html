@@ -5,17 +5,22 @@
     <div class="container">
         <div ng-repeat="sublist in movies" class="row top-buffer">
             <div ng-repeat="movie in sublist" class="col-md-4">
-                <a href="#!details">
-                    <div class="card h-100" ng-init="viewDetails(movie.id)">
+
+                <div class="card h-100" ng-click="setSelectedMovie(movie)">
+                    <a href="#!details">
                         <img class="card-img-top"
                              src="https://image.tmdb.org/t/p/w185_and_h278_bestv2/{{movie.poster_path}}"
                              alt="{{movie.title}}">
-                        <div class="card-block">
-                            <h4 class="card-title" uib-tooltip="{{movie.title}}">{{ movie.title | limitTo: 50 }}{{movie.title.length > 50 ? '...' : ''}}</h4>
-                            <p class="card-text" uib-tooltip="{{movie.overview}}">{{movie.overview | limitTo: 200 }}{{movie.overview.length > 200 ? '...' : ''}}</p>
-                        </div>
+                    </a>
+                    <div class="card-block">
+                        <h4 class="card-title" uib-tooltip="{{movie.title}}">
+                            {{ movie.title | limitTo: 50 }}{{ movie.title.length > 50 ? '...' : '' }}
+                        </h4>
+                        <p class="card-text" uib-tooltip="{{movie.overview}}">
+                            {{movie.overview | limitTo: 200 }}{{movie.overview.length > 200 ? '...' : ''}}
+                        </p>
                     </div>
-                </a>
+                </div>
             </div>
         </div>
     </div>

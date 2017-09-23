@@ -1,5 +1,44 @@
 <div class="jumbotron text-center">
     <h1>Movie Details</h1>
 
-    <p>{{ message }}</p>
+    <div class="container">
+        <div class="card">
+            <div class="row h-100">
+                <div class="col-md-6">
+                    <div class="card-img-bottom">
+                        <img class="card-img-top"
+                             src="https://image.tmdb.org/t/p/w185_and_h278_bestv2/{{movie.poster_path}}"
+                             alt="{{movie.title}}">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card-block">
+                        <h3 class="card-title">{{movie.title}}</h3>
+                        <small>{{movie.release_date}}</small>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-3 col-sm-6">
+                                    <div class="progress green">
+                                        <span class="progress-left">
+                                            <span class="progress-bar"></span>
+                                        </span>
+                                        <span class="progress-right">
+                                            <span class="progress-bar"></span>
+                                        </span>
+                                        <div class="progress-value">{{movie.vote_average*10}}%</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-6">
+                                    <a href="#!"><i class="fa fa-gratipay" aria-hidden="true"></i> Add to favorites</a>
+
+                                </div>
+                            </div>
+                        </div>
+                        <h3>Overview</h3>
+                        <p class="card-text">{{movie.overview}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
