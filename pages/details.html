@@ -1,45 +1,35 @@
-<div class="jumbotron text-left">
-    <h1>Movie Details</h1>
-
-    <div class="container">
-        <div class="card">
-            <div class="row h-100">
-                <div class="col-md-6">
-                    <div class="card-img-bottom">
-                        <img class="card-img-top"
-                             src="https://image.tmdb.org/t/p/w185_and_h278_bestv2/{{movie.poster_path}}"
-                             alt="{{movie.title}}">
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card-block">
-                        <span>
-                        <h3 class="card-title">{{movie.title}}</h3>
-                        <small>{{movie.release_date}}</small>
-                            </span>
-                        <div class="container">
-                            <div class="row">
-                                <!--<div class="col-md-3 col-sm-6">-->
-                                    <!--<div class="progress green">-->
-                                            <!--<span class="progress-left">-->
-                                            <!--<span class="progress-bar"></span>-->
-                                            <!--</span>-->
-                                        <!--<span class="progress-right">-->
-                                                <!--<span class="progress-bar"></span>-->
-                                            <!--</span>-->
-                                        <!--<div class="progress-value">{{movie.vote_average*10}}%</div>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                                <!--<div class="col-md-3 col-sm-6">-->
-                                    <!--<button ng-click="addToFavorites(movie)">Add to favorites</button>-->
-                                <!--</div>-->
-                            </div>
-                        </div>
-                        <h3>Overview</h3>
-                        <p class="card-text">{{movie.overview}}</p>
-                    </div>
-                </div>
+<div class="container">
+    <div class="jumbotron jumbotron-sm header">
+        <div class="row">
+            <div class="col-sm-12 col-lg-12">
+                <h1 class="h2" style="margin-top:-2%">
+                    {{movie.title}} <small>({{movie.release_date}})</small>
+                </h1>
             </div>
         </div>
     </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-5">
+           <span class="tags" ng-repeat="genre in movie.genres">{{genre.name}}</span>
+            <br/>
+            <h3>
+                Overview:
+            </h3>
+            <p>
+                {{movie.overview}}
+            </p>
+        </div>
+        <div class="col-sm-7">
+            <iframe ng-if="!!movie.trailer"
+                    ng-src="{{movie.trailer}}"
+                    width="600"
+                    height="430"
+                    frameborder="0"
+                    style="border:0"
+                    allowfullscreen></iframe>
+        </div>
+    </div>
+
 </div>

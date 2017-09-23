@@ -27,6 +27,11 @@ movieApp.config(function ($routeProvider) {
         controller: 'detailsController'
     })
 
+    .when('/search', {
+        templateUrl: 'pages/home.html',
+        controller: 'searchController'
+    })
+
     // route for the favorite movies page
     .when('/favorites', {
         templateUrl: 'pages/favorites.html',
@@ -34,7 +39,7 @@ movieApp.config(function ($routeProvider) {
     });
 });
 
-movieApp.service('movieService', function ($http, authService) {
+movieApp.service('movieService', function ($http, authService, $sce) {
 
     var self = this;
     this.movies = [];
@@ -70,12 +75,29 @@ movieApp.service('movieService', function ($http, authService) {
     };
 
     this.getDetails = function (id) {
+        var movieDetails = null;
         var movieDetailsApiPath = 'https://api.themoviedb.org/3/movie/' + id + '?api_key=cd011ce4747999c8ae715a61176561e6&language=en-US';
         return $http.get(movieDetailsApiPath).then(function (result) {
+            self.getMovieTrailer(id).then(function(trailer) {
+                 if(trailer.results !== undefined && trailer.results.length > 0){
+                   result.data.trailer = $sce.trustAsResourceUrl("https://www.youtube.com/embed/" + trailer.results[0].key);
+                 }
+            });
+            console.log('details ' + result.data);
             return result.data;
         });
     };
 
+    this.getMovieTrailer = function (movieId) {
+        var req = {
+            method: 'GET',
+            url: 'https://api.themoviedb.org/3/movie/' + movieId +'/videos',
+            params: {api_key: "cd011ce4747999c8ae715a61176561e6", language : "en-US"}
+        };
+        return $http(req).then(function (result) {
+            return result.data;
+        });
+    };
     this.setSelectedMovie = function (movie) {
         console.log(movie);
         this.selectedMovie = movie;
@@ -191,21 +213,21 @@ movieApp.controller('mainController', function ($scope, $location, movieService)
         $scope.movies = result;
     });
 
-    $scope.search = function() {
-         $location.path('/');
-         movieService.search($scope.searchText).then(function(result) {});
-         $scope.searchText = "";
-    };
+});
 
+movieApp.controller('searchController', function ($scope, $location, movieService, $rootScope) {
+    $scope.search = function() {
+        movieService.search($scope.searchText).then(function(result) {
+            $rootScope.movies = result;
+            $scope.searchText = "";
+        });
+    };
 });
 
 movieApp.controller('aboutController', function ($scope) {
-    $scope.message = 'Look! I am an about page.';
 });
 
-
 movieApp.controller('contactController', function ($scope) {
-    $scope.message = 'Contact us! JK. This is just a demo.';
 });
 
 movieApp.controller('favoritesController', function ($scope, authService) {
@@ -218,6 +240,7 @@ movieApp.controller('favoritesController', function ($scope, authService) {
 movieApp.controller('detailsController', function ($scope, $routeParams, movieService) {
     console.log($routeParams.id);
     movieService.getDetails($routeParams.id).then(function (response) {
+        console.log(response);
         $scope.movie = response;
     });
     console.log($scope.movie);
