@@ -3,7 +3,8 @@
         <div class="row">
             <div class="col-sm-12 col-lg-12">
                 <h1 class="h2" style="margin-top:-2%">
-                    {{movie.title}} <small>({{movie.release_date}})</small>
+                    {{movie.title}}
+                    <small>({{movie.release_date}})</small>
                 </h1>
             </div>
         </div>
@@ -12,7 +13,7 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-5">
-           <span class="tags" ng-repeat="genre in movie.genres">{{genre.name}}</span>
+            <span class="tags" ng-repeat="genre in movie.genres">{{genre.name}}</span>
             <br/>
             <h3>
                 Overview:
@@ -20,6 +21,7 @@
             <p>
                 {{movie.overview}}
             </p>
+            <button>Add to Favorite</button>
         </div>
         <div class="col-sm-7">
             <iframe ng-if="!!movie.trailer"
