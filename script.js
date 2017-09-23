@@ -1,4 +1,4 @@
-var movieApp = angular.module('scotchApp', ['ngRoute']);
+var movieApp = angular.module('movieApp', ['ngRoute']);
 
 movieApp.config(function ($routeProvider) {
     $routeProvider
@@ -22,7 +22,7 @@ movieApp.config(function ($routeProvider) {
     })
 
     // route for the details page
-    .when('/details', {
+    .when('/movie/:id', {
         templateUrl: 'pages/details.html',
         controller: 'detailsController'
     })
@@ -34,7 +34,7 @@ movieApp.config(function ($routeProvider) {
     });
 });
 
-movieApp.service('movieService', function ($http) {
+movieApp.service('movieService', function ($http, authService) {
 
     var self = this;
     this.movies = [];
@@ -72,7 +72,7 @@ movieApp.service('movieService', function ($http) {
     this.getDetails = function (id) {
         var movieDetailsApiPath = 'https://api.themoviedb.org/3/movie/' + id + '?api_key=cd011ce4747999c8ae715a61176561e6&language=en-US';
         return $http.get(movieDetailsApiPath).then(function (result) {
-
+            return result.data;
         });
     };
 
@@ -85,31 +85,102 @@ movieApp.service('movieService', function ($http) {
         return this.selectedMovie;
     };
 
+    this.addToFavorites = function() {
+        // get the session id
+        authService.retrieveToken().then(function (response) {
+            var token = response;
+            authService.authenticate(token).then(function (response) {
+                console.log(response);
+                authService.retrieveSessionId(token).then(function (response) {
+                    var sessionId = response;
+                }, function (error) {
+                    console.error('Could not retrieve session id ', error)
+                });
+            }, function (error) {
+                console.error('Could not authenticate ', error);
+            });
+        }, function (error) {
+            console.error('Could not retrieve token ', error);
+        });
+        //add the selected movie to favorites
+    }
+
 });
 
 movieApp.service('authService', function ($http) {
 
     var self = this;
-    this.movies = [];
-    this.selectedMovie = null;
     this.token = null;
+    this.isAuthenticated = false;
+    this.sessionId = null;
 
-    this.getToken = function () {
-        self.movies.length = 0;
+    this.setToken = function (tkn) {
+        this.token = tkn;
+    };
+
+    this.getToken = function() {
+        return this.token;
+    };
+
+    this.setIsAuthenticated = function (isAuthenticated) {
+        this.isAuthenticated = isAuthenticated;
+    };
+
+    this.getIsAuthenticated = function () {
+        return this.isAuthenticated;
+    };
+
+    this.setSessionId = function(id) {
+        this.sessionId = id;
+    };
+
+    this.retrieveSessionId = function() {
+        return this.sessionId;
+    };
+
+    this.retrieveToken = function () {
         var req = {
                     method: 'GET',
-                    url: 'https://api.themoviedb.org/3/movie/popular',
-                    params: {api_key: "cd011ce4747999c8ae715a61176561e6",language:"en-US"}
-                 };
-        $http(req).then(function successCallback(response) {
-            // this callback will be called asynchronously
-            // when the response is available
-            self.token = response.data;
-        }, function errorCallback(response) {
-            // called asynchronously if an error occurs
-            // or server returns response with an error status.
+                    url: 'https://api.themoviedb.org/3/authentication/token/new',
+                    params: {api_key: "cd011ce4747999c8ae715a61176561e6"}
+        };
+
+        return $http(req).then(function (response) {
+           self.setToken(response.data.request_token);
+           return response.data.request_token;
+        }, function(error) {
+            console.error('Could not retrieve the token ', error);
         });
     };
+       // ?redirect_to=http://localhost:63342/visma/visma-spa/index.html
+    this.authenticate = function (token) {
+        var req = {
+            method: 'GET',
+            url: 'https://www.themoviedb.org/authenticate/' + token
+            // params: {redirect_to: "#!"}
+        };
+        return $http(req).then(function (response) {
+            self.setIsAuthenticated(true);
+            return self.isAuthenticated;
+        }, function(error) {
+            console.error('Could not retrieve the token ', error);
+        })
+    };
+
+    this.retrieveSessionId = function (token) {
+            var req = {
+                method: 'GET',
+                url: 'https://api.themoviedb.org/3/authentication/session/new',
+                params: {api_key: "cd011ce4747999c8ae715a61176561e6", request_token : token}
+            };
+
+        return $http(req).then(function (response) {
+            self.setSessionId(response.data.session_id);
+            return response.data.session_id;
+        }, function(error) {
+            console.error('Could not retrieve the token ', error);
+        });
+    }
 
 
 });
@@ -117,17 +188,13 @@ movieApp.service('authService', function ($http) {
 movieApp.controller('mainController', function ($scope, movieService) {
 
     movieService.getPopularMovies().then(function(result) {
-       $scope.movies = result;
+        $scope.movies = result;
     });
 
     $scope.search = function() {
         return movieService.search($scope.searchText).then(function(result) {});
     };
 
-    $scope.setSelectedMovie = function(movie) {
-        console.log(movie);
-        movieService.setSelectedMovie(movie);
-    };
 });
 
 movieApp.controller('aboutController', function ($scope) {
@@ -140,11 +207,18 @@ movieApp.controller('contactController', function ($scope) {
 });
 
 movieApp.controller('favoritesController', function ($scope, authService) {
-    authService.getToken();
+    authService.retrieveToken().then(function(result) {
+        $scope.token = result;
+    });
     $scope.message = 'Favorites';
 });
 
-movieApp.controller('detailsController', function ($scope, movieService) {
-    $scope.movie = movieService.getSelectedMovie();
+movieApp.controller('detailsController', function ($scope, $routeParams, movieService) {
+    console.log($routeParams.id);
+    movieService.getDetails($routeParams.id).then(function (response) {
+        $scope.movie = response;
+    });
+    console.log($scope.movie);
+
 });
 

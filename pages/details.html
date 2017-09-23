@@ -1,4 +1,4 @@
-<div class="jumbotron text-center">
+<div class="jumbotron text-left">
     <h1>Movie Details</h1>
 
     <div class="container">
@@ -13,25 +13,26 @@
                 </div>
                 <div class="col-md-6">
                     <div class="card-block">
+                        <span>
                         <h3 class="card-title">{{movie.title}}</h3>
                         <small>{{movie.release_date}}</small>
+                            </span>
                         <div class="container">
                             <div class="row">
-                                <div class="col-md-3 col-sm-6">
-                                    <div class="progress green">
-                                        <span class="progress-left">
-                                            <span class="progress-bar"></span>
-                                        </span>
-                                        <span class="progress-right">
-                                            <span class="progress-bar"></span>
-                                        </span>
-                                        <div class="progress-value">{{movie.vote_average*10}}%</div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <a href="#!"><i class="fa fa-gratipay" aria-hidden="true"></i> Add to favorites</a>
-
-                                </div>
+                                <!--<div class="col-md-3 col-sm-6">-->
+                                    <!--<div class="progress green">-->
+                                            <!--<span class="progress-left">-->
+                                            <!--<span class="progress-bar"></span>-->
+                                            <!--</span>-->
+                                        <!--<span class="progress-right">-->
+                                                <!--<span class="progress-bar"></span>-->
+                                            <!--</span>-->
+                                        <!--<div class="progress-value">{{movie.vote_average*10}}%</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="col-md-3 col-sm-6">-->
+                                    <!--<button ng-click="addToFavorites(movie)">Add to favorites</button>-->
+                                <!--</div>-->
                             </div>
                         </div>
                         <h3>Overview</h3>
