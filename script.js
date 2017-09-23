@@ -185,14 +185,16 @@ movieApp.service('authService', function ($http) {
 
 });
 
-movieApp.controller('mainController', function ($scope, movieService) {
+movieApp.controller('mainController', function ($scope, $location, movieService) {
 
     movieService.getPopularMovies().then(function(result) {
         $scope.movies = result;
     });
 
     $scope.search = function() {
-        return movieService.search($scope.searchText).then(function(result) {});
+         $location.path('/');
+         movieService.search($scope.searchText).then(function(result) {});
+         $scope.searchText = "";
     };
 
 });

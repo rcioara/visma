@@ -173,7 +173,7 @@
 }
 
 .navbar-nav li a:hover, .navbar-nav li.active a {
-  color: #1abc9c !important;
+  color: #585858 !important;
   background-color: #fff !important;
   float: left
 }
@@ -207,9 +207,9 @@ li {
 
 
 .btn-search {
-  color: #1abc9c;
+  color: #585858 !important;
   background-image: none;
-  border-color: #1abc9c;
+  border-color: #585858;
 }
 
 
@@ -221,7 +221,7 @@ li {
 .header {
   background-color:#1abc9c;
   margin-top:2%;
-  color:white;
+  color: #ffffff;
 }
 
 .contact-info {
