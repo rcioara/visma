@@ -4,13 +4,13 @@
             <div class="lib-panel">
                 <div class="row box-shadow">
                     <div class="col-md-6">
-                        <a href="#!movie/{{movie.id}}">
+                        <a href="#movie/{{movie.id}}">
                             <img class="lib-img-show"
                                  src="https://image.tmdb.org/t/p/w185_and_h278_bestv2/{{movie.poster_path}}">
                         </a>
                     </div>
                     <div class="col-md-6">
-                        <a href="#!movie/{{movie.id}}">
+                        <a href="#movie/{{movie.id}}">
                             <div class="lib-row lib-header" data-toggle="tooltip" data-placement="top"
                                  title="{{movie.title}}">
                                 {{ movie.title | limitTo: 25 }}{{ movie.title.length > 25 ? '...' : '' }}

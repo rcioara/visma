@@ -7,12 +7,13 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-route.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-animate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.9/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.9/angular-route.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.9/angular-animate.min.js"></script>
 
     <script src="app.js"></script>
     <script src="scripts/services/authenticationService.js"></script>
+    <script src="scripts/directives/fallbackDirective.js"></script>
     <script src="scripts/services/movieService.js"></script>
     <script src="scripts/controllers/main.js"></script>
     <script src="scripts/controllers/search.js"></script>
@@ -23,7 +24,7 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 
-<body>
+<body ng-controller="mainController">
 
 <nav class="navbar navbar-expand-lg navbar-light">
 
@@ -37,18 +38,18 @@
         <span class="navbar-toggler-icon"></span>
     </button>
 
-    <a class="navbar-brand" href="index.html">Movies DB</a>
+    <a class="navbar-brand" href="#/">Movies DB</a>
 
     <div class="collapse navbar-collapse justify-content-between" id="navMovieDb">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="#!"><i class="fa fa-home"></i> Home</a>
+                <a class="nav-link" href="#/"><i class="fa fa-home"></i> Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#!about"><i class="fa fa-shield"></i> About</a>
+                <a class="nav-link" href="#about"><i class="fa fa-shield"></i> About</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#!contact"><i class="fa fa-comment"></i> Contact</a>
+                <a class="nav-link" href="#contact"><i class="fa fa-comment"></i> Contact</a>
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0" ng-controller="searchController">

@@ -53,9 +53,8 @@ movieApp.service('authService', function ($http, $sce) {
             // params: {callback: "JSON_CALLBACK", redirect_to: "!#"}
         };
 
-        var path = 'https://www.themoviedb.org/authenticate/' + token + '?callback=test';
-        // return $http.jsonp($sce.trustAsResourceUrl(path)).then(function (response) {
-        return $http(req).then(function (response) {
+        var path = "https://www.themoviedb.org/authenticate/" + token + "?callback=JSON_CALLBACK";
+        return $http.jsonp(path).then(function (response) {
             self.setIsAuthenticated(true);
             return self.isAuthenticated;
         }, function (error) {
