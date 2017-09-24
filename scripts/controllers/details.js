@@ -1,8 +1,17 @@
 movieApp.controller('detailsController', function ($scope, $routeParams, movieService) {
-    console.log($routeParams.id);
+
     movieService.getDetails($routeParams.id).then(function (response) {
         console.log(response);
         $scope.movie = response;
+    }, function (error) {
+        console.error('Could not retrive details for movie id ' + $routeParams.id);
     });
-    console.log($scope.movie);
+
+    $scope.addToFavorites = function (movie) {
+        movieService.addToFavorites().then(function (response) {
+            console.log(response);
+        }, function (error) {
+            console.error("Could not add to favorites", error);
+        });
+    };
 });

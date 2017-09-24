@@ -1,9 +1,9 @@
 var movieApp = angular.module('movieApp', ['ngRoute']);
 
-movieApp.config(function ($routeProvider) {
+movieApp.config(function ($routeProvider, $httpProvider) {
     $routeProvider
 
-        // route for the home page
+    // route for the home page
         .when('/', {
             templateUrl: 'scripts/views/home.html',
             controller: 'mainController'
@@ -31,5 +31,7 @@ movieApp.config(function ($routeProvider) {
             templateUrl: 'scripts/views/home.html',
             controller: 'searchController'
         });
+
+    $httpProvider.defaults.useXDomain = true;
 });
 

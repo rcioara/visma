@@ -10,7 +10,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-route.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-animate.min.js"></script>
-    <script src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
+
     <script src="app.js"></script>
     <script src="scripts/services/authenticationService.js"></script>
     <script src="scripts/services/movieService.js"></script>
@@ -20,36 +20,48 @@
     <script src="scripts/controllers/about.js"></script>
     <script src="scripts/controllers/contact.js"></script>
 
-
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 
-<nav class="navbar">
+<nav class="navbar navbar-expand-lg navbar-light">
 
-    <a class="navbar-brand navbar-brand-left" href="#">Movies DB</a>
+    <button class="navbar-toggler navbar-toggler-right"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navMovieDb"
+            aria-controls="navMovieDb"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-    <ul class="nav navbar-nav navbar-right">
-        <li>
-            <a class="nav-link" href="#!"><i class="fa fa-home"></i> Home</a>
-        </li>
-        <li>
-            <a class="nav-link" href="#!about"><i class="fa fa-shield"></i> About</a>
-        </li>
-        <li>
-            <a class="nav-link" href="#!contact"><i class="fa fa-comment"></i>Contact</a>
-        </li>
-    </ul>
-    <form class="form-inline my-2 my-lg-0" ng-controller="searchController">
-        <input class="form-control mr-sm-2"
-               type="text"
-               ng-model="searchText"
-               placeholder="Search a movie"
-               aria-label="Search">
-        <button class="btn btn-search my-2 my-sm-0" type="submit" ng-click="search()">Search</button>
-    </form>
+    <a class="navbar-brand" href="index.html">Movies DB</a>
+
+    <div class="collapse navbar-collapse justify-content-between" id="navMovieDb">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="#!"><i class="fa fa-home"></i> Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#!about"><i class="fa fa-shield"></i> About</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#!contact"><i class="fa fa-comment"></i> Contact</a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0" ng-controller="searchController">
+            <input class="form-control mr-sm-2"
+                   type="text"
+                   ng-model="searchText"
+                   placeholder="Search for a movie..."
+                   aria-label="Search">
+            <button class="btn btn-search my-2 my-sm-0" type="submit" ng-click="search()">Search</button>
+        </form>
+    </div>
 </nav>
+
 
 <div id="main">
     <div ng-view></div>

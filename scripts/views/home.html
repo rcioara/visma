@@ -1,24 +1,26 @@
-<div class="jumbotron">
-
-    <h1>Popular Movies</h1>
-
-    <div class="container">
-        <div ng-repeat="sublist in movies" class="row top-buffer">
-            <div ng-repeat="movie in sublist" class="col-md-4">
-
-                <div class="card h-100">
-                    <a href="#!movie/{{movie.id}}">
-                        <img class="card-img-top"
-                             src="https://image.tmdb.org/t/p/w185_and_h278_bestv2/{{movie.poster_path}}"
-                             alt="{{movie.title}}">
-                    </a>
-                    <div class="card-block">
-                        <h4 class="card-title" data-toggle="tooltip" data-placement="top" title="{{movie.title}}">
-                            {{ movie.title | limitTo: 50 }}{{ movie.title.length > 50 ? '...' : '' }}
-                        </h4>
-                        <p class="card-text" data-toggle="tooltip" data-placement="top" title="{{movie.overview}}">
+<div class="container" style="margin-top:5%">
+    <div ng-repeat="sublist in movies" class="row row-margin-bottom">
+        <div ng-repeat="movie in sublist" class="col-md-5 lib-item" data-category="view">
+            <div class="lib-panel">
+                <div class="row box-shadow">
+                    <div class="col-md-6">
+                        <a href="#!movie/{{movie.id}}">
+                            <img class="lib-img-show"
+                                 src="https://image.tmdb.org/t/p/w185_and_h278_bestv2/{{movie.poster_path}}">
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="#!movie/{{movie.id}}">
+                            <div class="lib-row lib-header" data-toggle="tooltip" data-placement="top"
+                                 title="{{movie.title}}">
+                                {{ movie.title | limitTo: 25 }}{{ movie.title.length > 25 ? '...' : '' }}
+                                <div class="lib-header-seperator"></div>
+                            </div>
+                        </a>
+                        <div class="lib-row lib-desc" data-toggle="tooltip" data-placement="top"
+                             title="{{movie.overview}}">
                             {{movie.overview | limitTo: 200 }}{{movie.overview.length > 200 ? '...' : ''}}
-                        </p>
+                        </div>
                     </div>
                 </div>
             </div>

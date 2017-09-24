@@ -1,4 +1,4 @@
-movieApp.service('authService', function ($http) {
+movieApp.service('authService', function ($http, $sce) {
 
     var self = this;
     this.token = null;
@@ -46,15 +46,25 @@ movieApp.service('authService', function ($http) {
     this.authenticate = function (token) {
         var req = {
             method: 'GET',
-            url: 'https://www.themoviedb.org/authenticate/' + token
-            // params: {redirect_to: "#!"}
+            url: 'https://www.themoviedb.org/authenticate/' + token,
+            headers: {
+                'Access-Control-Allow-Origin': '*'
+            }
+            // params: {callback: "JSON_CALLBACK", redirect_to: "!#"}
         };
+
+        var path = 'https://www.themoviedb.org/authenticate/' + token + '?callback=test';
+        // return $http.jsonp($sce.trustAsResourceUrl(path)).then(function (response) {
         return $http(req).then(function (response) {
             self.setIsAuthenticated(true);
             return self.isAuthenticated;
         }, function (error) {
-            console.error('Could not retrieve the token ', error);
+            console.error('Could not authenticate ', error);
         })
+    };
+
+    this.test = function () {
+        console.log('test');
     };
 
     this.retrieveSessionId = function (token) {
@@ -68,7 +78,7 @@ movieApp.service('authService', function ($http) {
             self.setSessionId(response.data.session_id);
             return response.data.session_id;
         }, function (error) {
-            console.error('Could not retrieve the token ', error);
+            console.error('Could not retrieve session id ', error);
         });
     }
 
